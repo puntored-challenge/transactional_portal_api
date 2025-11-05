@@ -1,5 +1,7 @@
 package com.codechallenge.transactional_portal_api.config;
 
+import com.codechallenge.transactional_portal_api.filter.JwtFilter;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,10 +11,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+
+    private final JwtFilter jwtFilter;
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -20,8 +26,10 @@ public class SecurityConfig {
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers("/**").permitAll()  // Todo permitido
-                );
+                        .requestMatchers("/v1/auth/**").permitAll()   // login y registro públicos
+                        .anyRequest().authenticated()              // resto requiere JWT válido
+                )
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class); // ← Aquí se agrega el filtro JWT
 
         return http.build();
     }
