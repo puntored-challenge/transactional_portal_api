@@ -1,5 +1,6 @@
 package com.codechallenge.transactional_portal_api.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.Setter;
 @Setter
 @Getter
 @Builder
+@AllArgsConstructor
 public class TransactionToken {
     private String token;
 }

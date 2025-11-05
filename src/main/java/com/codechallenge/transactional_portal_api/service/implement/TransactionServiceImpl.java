@@ -3,7 +3,6 @@ package com.codechallenge.transactional_portal_api.service.implement;
 import com.codechallenge.transactional_portal_api.exception.ResourcesNotFoundException;
 import com.codechallenge.transactional_portal_api.model.*;
 import com.codechallenge.transactional_portal_api.service.client.TransactionFeignClient;
-import com.codechallenge.transactional_portal_api.service.client.dto.TransactionClientRechargeRequestDto;
 import com.codechallenge.transactional_portal_api.service.client.mapper.TransactionClientDtoMapper;
 import com.codechallenge.transactional_portal_api.service.interfaces.TransactionService;
 import lombok.RequiredArgsConstructor;

@@ -1,15 +1,13 @@
 package com.codechallenge.transactional_portal_api.model;
 
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
 @Setter
 @Builder
 @ToString
+@AllArgsConstructor
 public class TransactionRechargeRequest {
     private String supplierId;
     private String cellPhone;
