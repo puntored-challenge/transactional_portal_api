@@ -22,10 +22,26 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<Object> handleBadCredentialsException(ResourcesNotFoundException ex) {
+    public ResponseEntity<Object> handleBadCredentialsException(BadCredentialsException ex) {
         return new ResponseEntity<>(
                 new ErrorResponse("BAD_CREDENTIALS", ex.getMessage()),
-                HttpStatus.NOT_FOUND
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<Object> UserAlreadyExistsException(UserAlreadyExistsException ex) {
+        return new ResponseEntity<>(
+                new ErrorResponse("BAD_REQUEST", ex.getMessage()),
+                HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<Object> UnauthorizedException(UnauthorizedException ex) {
+        return new ResponseEntity<>(
+                new ErrorResponse("UNAUTHORIZED", ex.getMessage()),
+                HttpStatus.UNAUTHORIZED
         );
     }
 

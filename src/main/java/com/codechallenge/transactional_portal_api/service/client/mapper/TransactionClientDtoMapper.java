@@ -1,5 +1,6 @@
 package com.codechallenge.transactional_portal_api.service.client.mapper;
 
+import com.codechallenge.transactional_portal_api.entity.TransactionRechargeEntity;
 import com.codechallenge.transactional_portal_api.model.*;
 import com.codechallenge.transactional_portal_api.service.client.dto.*;
 

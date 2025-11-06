@@ -1,5 +1,6 @@
 package com.codechallenge.transactional_portal_api.util;
 
+import com.codechallenge.transactional_portal_api.exception.UnauthorizedException;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -14,7 +15,10 @@ import java.util.function.Function;
 public class JwtUtil {
 
     @Value("${jwt.configuration.secrect}")
-    private String SECRET_KEY;
+    private String secretKey;
+
+    @Value("${jwt.configuration.expiration}")
+    private int expirationInMiliseconds;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);
@@ -27,7 +31,7 @@ public class JwtUtil {
 
     private Claims extractAllClaims(String token) {
         return Jwts.parser()
-                .setSigningKey(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()))
+                .setSigningKey(Keys.hmacShaKeyFor(secretKey.getBytes()))
                 .parseClaimsJws(token)
                 .getBody();
     }
@@ -37,7 +41,7 @@ public class JwtUtil {
             extractAllClaims(token);
             return true;
         } catch (Exception e) {
-            return false;
+            throw new UnauthorizedException("Token invalid");
         }
     }
 
@@ -45,8 +49,8 @@ public class JwtUtil {
         return Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1h
-                .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes()), SignatureAlgorithm.HS256)
+                .setExpiration(new Date(System.currentTimeMillis() + expirationInMiliseconds)) // 1h
+                .signWith(Keys.hmacShaKeyFor(secretKey.getBytes()), SignatureAlgorithm.HS256)
                 .compact();
     }
 }

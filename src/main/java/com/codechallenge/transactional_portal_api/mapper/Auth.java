@@ -1,6 +1,8 @@
 package com.codechallenge.transactional_portal_api.mapper;
 
+import com.codechallenge.transactional_portal_api.dto.AuthResponseDto;
 import com.codechallenge.transactional_portal_api.dto.LoginRequestDto;
+import com.codechallenge.transactional_portal_api.dto.SignInRequestDto;
 import com.codechallenge.transactional_portal_api.entity.UserEntity;
 import com.codechallenge.transactional_portal_api.model.AuthResponse;
 import com.codechallenge.transactional_portal_api.model.User;
@@ -10,6 +12,19 @@ public class Auth {
         return User.builder()
                 .username(loginRequestDto.getUsername())
                 .password(loginRequestDto.getPassword())
+                .build();
+    }
+
+    public static AuthResponseDto toAuthResponseDto(AuthResponse authResponse) {
+        return AuthResponseDto.builder().token(authResponse.getToken()).build();
+    }
+
+    public static User toUser(SignInRequestDto signInRequestDto) {
+        return User.builder()
+                .name(signInRequestDto.getName())
+                .lastname(signInRequestDto.getLastname())
+                .username(signInRequestDto.getUsername())
+                .password(signInRequestDto.getPassword())
                 .build();
     }
 

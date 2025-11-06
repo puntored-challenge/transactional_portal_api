@@ -3,6 +3,7 @@ package com.codechallenge.transactional_portal_api.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -31,5 +32,13 @@ public class UserEntity {
     private String lastname;
 
     private String password;
+
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    private List<TransactionRechargeEntity> recharges;
 
 }

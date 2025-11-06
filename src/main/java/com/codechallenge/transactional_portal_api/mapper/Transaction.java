@@ -3,13 +3,15 @@ package com.codechallenge.transactional_portal_api.mapper;
 import com.codechallenge.transactional_portal_api.dto.TransactionRechargeRequestDto;
 import com.codechallenge.transactional_portal_api.dto.TransactionRechargeResponseDto;
 import com.codechallenge.transactional_portal_api.dto.TransactionSupplierDto;
+import com.codechallenge.transactional_portal_api.entity.TransactionRechargeEntity;
+import com.codechallenge.transactional_portal_api.model.TransactionRecharge;
 import com.codechallenge.transactional_portal_api.model.TransactionRechargeRequest;
 import com.codechallenge.transactional_portal_api.model.TransactionRechargeResponse;
 import com.codechallenge.transactional_portal_api.model.TransactionSupplier;
 
 import java.util.List;
 
-public class TransactionDto {
+public class Transaction {
     public static TransactionRechargeRequest toTransactionRechargeRequest(TransactionRechargeRequestDto transactionRechargeRequestDto) {
         return  TransactionRechargeRequest.builder()
                 .value(transactionRechargeRequestDto.getValue())
@@ -35,6 +37,17 @@ public class TransactionDto {
                 .value(transactionRechargeResponse.getValue())
                 .message(transactionRechargeResponse.getMessage())
                 .cellPhone(transactionRechargeResponse.getCellPhone())
+                .build();
+    }
+
+    public static TransactionRechargeEntity toTransactionRechargeEntity(TransactionRecharge transactionRecharge) {
+        return TransactionRechargeEntity.builder()
+                .status(transactionRecharge.getStatus())
+                .cellPhone(transactionRecharge.getCellPhone())
+                .user(transactionRecharge.getUser())
+                .value(transactionRecharge.getValue())
+                .supplierId(transactionRecharge.getSupplierId())
+                .transactionalId(transactionRecharge.getTransactionalId())
                 .build();
     }
 }
