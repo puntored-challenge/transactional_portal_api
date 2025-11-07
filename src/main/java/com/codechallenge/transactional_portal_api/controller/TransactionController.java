@@ -114,6 +114,25 @@ public class TransactionController {
      *
      * @return una respuesta con la lista de recargas realizadas por el usuario autenticado.
      */
+    @Operation(
+            summary = "Obtener historial de recargas",
+            description = "Devuelve la lista de recargas realizadas por el usuario autenticado.",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Lista de recargas obtenida exitosamente",
+                            content = @Content(
+                                    mediaType = "application/json",
+                                    schema = @Schema(implementation = SuccessResponseDto.class)
+                            )
+                    ),
+                    @ApiResponse(
+                            responseCode = "401",
+                            description = "Usuario no autenticado",
+                            content = @Content
+                    )
+            }
+    )
     @GetMapping
     public ResponseEntity<SuccessResponseDto<?>> getRecharges() {
         log.info("get recharges");
